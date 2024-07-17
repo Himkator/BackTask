@@ -29,11 +29,12 @@ public class ProductDTOFactory {
     }
 
     public Product makeProductFromDTO(ProductDTO productDTO){
-
+        User user=userRepository.findByEmail(jwtUtils.extractUsername(JWTAuthFilter.jwt));
         return Product.builder()
                 .name(productDTO.getName())
                 .cost(productDTO.getCost())
                 .count(productDTO.getCount())
+                .user(user)
                 .build();
     }
 }

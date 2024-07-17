@@ -20,7 +20,7 @@ public class AdminController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserDTO> updateUser(@PathVariable Long id, UserDTO userDTO){
+    public ResponseEntity<UserDTO> updateUser(@PathVariable Long id,@RequestBody UserDTO userDTO){
         return ResponseEntity.ok(adminService.updateUser(id, userDTO));
     }
 

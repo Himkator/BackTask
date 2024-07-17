@@ -1,10 +1,7 @@
 package com.example.cloud.eureka.backtask.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -28,8 +25,9 @@ public class User implements UserDetails {
     @Column(length = 2550000)
     private String password;
     @Column(nullable = false)
+    @NonNull
     private String role;
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Product> products=new ArrayList<>();
 
     @Builder.Default
@@ -37,6 +35,8 @@ public class User implements UserDetails {
 
     @Builder.Default
     Instant updatedAt = Instant.now();
+
+    private boolean enabled;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

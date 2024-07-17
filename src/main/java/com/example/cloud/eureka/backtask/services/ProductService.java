@@ -58,6 +58,7 @@ public class ProductService {
         }
         Product product=productDTOFactory.makeProductFromDTO(productDTO);
         product=productRepository.saveAndFlush(product);
+        user.getProducts().add(product);
         productDTO=productDTOFactory.makeProductDTO(product);
         productDTO.setStatusCode(200);
         productDTO.setMessage("Product was created successfully");

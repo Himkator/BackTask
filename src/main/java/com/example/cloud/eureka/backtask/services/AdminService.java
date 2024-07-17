@@ -32,11 +32,13 @@ public class AdminService {
 
     public UserDTO updateUser(Long id, UserDTO userDTO){
         User user=userRepository.findById(id).orElse(null);
-        if(user==null) errorUser("User isnt exist");
-        user.setEmail(userDTO.getEmail());
+        if(user==null) return errorUser("User isnt exist");
+        if (userDTO.getRole() == null) return errorUser("Role cannot be null");
         user.setRole(userDTO.getRole());
-        user=userRepository.saveAndFlush(user);
-        userDTO=userDTOFactory.makeUserDTO(user);
+        user.setEmail(userDTO.getEmail());
+        user = userRepository.saveAndFlush(user);
+
+        userDTO = userDTOFactory.makeUserDTO(user);
         userDTO.setStatusCode(200);
         userDTO.setMessage("User was successfully updated");
         return userDTO;
@@ -44,12 +46,12 @@ public class AdminService {
 
     public UserDTO deleteUser(Long id){
         User user=userRepository.findById(id).orElse(null);
-        if(user==null) errorUser("User isnt exist");
+        if(user==null) return errorUser("User isnt exist");
 
         userRepository.delete(user);
         UserDTO userDTO=new UserDTO();
         userDTO.setStatusCode(200);
-        userDTO.setMessage("User was successfully deleted");
+        userDTO.setMessage("User was successfully deleted(banned)");
         return userDTO;
     }
 }

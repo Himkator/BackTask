@@ -31,6 +31,7 @@ public class AuthService {
             user.setEmail(registrationRequest.getEmail());
             user.setPassword(passwordEncoder.encode(registrationRequest.getPassword()));
             user.setRole(registrationRequest.getRole());
+            user.setEnabled(true);
             User user1=userRepository.saveAndFlush(user);
             if(user1!=null && user1.getId()>0){
                 registerResponse.setStatusCode(200);
